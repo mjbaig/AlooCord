@@ -1,0 +1,17 @@
+@default: 
+  just --list
+
+test:
+  mix test
+
+compile:
+  mix compile
+
+update_deps:
+  mix deps.get
+
+run_in_shell:
+  iex -S mix
+
+format_code:
+  mix format
