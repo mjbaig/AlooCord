@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:9.6.0 # You can specify a version, or use `latest`
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw # CHANGE THIS to a secure password
+      MYSQL_DATABASE: fireemblemcord
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+
