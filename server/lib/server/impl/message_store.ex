@@ -1,6 +1,6 @@
 # Caches most recent messages to memeory
 # Loads history at start up
-defmodule Server.MessageStore do
+defmodule Server.Impl.MessageStore do
   use GenServer
 
   @max_messages 1000

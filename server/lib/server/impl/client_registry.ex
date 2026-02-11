@@ -1,7 +1,7 @@
 # Long lived process that keeps track of which websocket clients are connected.
 # using the process ids. It uses the process ids to broadcast to their sockets.
 # TODO tie this to an account id
-defmodule Server.ClientRegistry do
+defmodule Server.Impl.ClientRegistry do
   use GenServer
 
   # api

@@ -2,10 +2,10 @@ defmodule Server.MessageStoreTest do
   alias Server.MessageStore
   use ExUnit.Case, async: false
 
-  alias Server.MessageStore
+  alias Server.Impl.MessageStore
 
   setup do
-    Server.MessageStore.reset()
+    MessageStore.reset()
     :ok
   end
 

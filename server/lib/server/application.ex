@@ -8,8 +8,8 @@ defmodule Server.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      Server.ClientRegistry,
-      Server.MessageStore,
+      Server.Impl.ClientRegistry,
+      Server.Impl.MessageStore,
       {Bandit, plug: Server.Router}
     ]
 

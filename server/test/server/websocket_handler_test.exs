@@ -2,7 +2,7 @@ defmodule Server.WebsocketHandlerTest do
   use ExUnit.Case, async: false
 
   alias Server.WebsocketHandler
-  alias Server.MessageStore
+  alias Server.Impl.MessageStore
 
   setup do
     MessageStore.reset()

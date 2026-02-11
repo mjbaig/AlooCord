@@ -1,10 +1,10 @@
 defmodule ClientRegistryTest do
   use ExUnit.Case, async: false
 
-  alias Server.ClientRegistry
+  alias Server.Impl.ClientRegistry
 
   setup do
-    Server.ClientRegistry.reset()
+    ClientRegistry.reset()
     :ok
   end
 

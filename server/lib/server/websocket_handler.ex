@@ -1,4 +1,7 @@
 defmodule Server.WebsocketHandler do
+  alias Server.Impl.MessageStore
+  alias Server.Impl.ClientRegistry
+
   def init(_args) do
     {:ok, %{accountId: nil}}
   end
@@ -26,7 +29,7 @@ defmodule Server.WebsocketHandler do
 
   def handle_disconnect(_reason, %{accountId: accountId} = state) do
     if accountId do
-      Server.ClientRegistry.unregister(accountId, self())
+      ClientRegistry.unregister(accountId, self())
     end
 
     {:ok, state}
@@ -35,7 +38,7 @@ defmodule Server.WebsocketHandler do
   defp handle_auth(accountId, state) do
     # register connection to user
     # TODO actually auth the user lol
-    Server.ClientRegistry.register(accountId, self())
+    ClientRegistry.register(accountId, self())
 
     send_unseen_messages(accountId)
 
@@ -45,16 +48,16 @@ defmodule Server.WebsocketHandler do
   def handle_client_message(data, %{accountId: accountId} = state) do
     data = Map.put(data, "accountId", accountId)
 
-    Server.MessageStore.store_message(data)
+    MessageStore.store_message(data)
 
-    Server.ClientRegistry.broadcast_global(data)
+    ClientRegistry.broadcast_global(data)
 
     {:ok, state}
   end
 
   # TODO
   def send_unseen_messages(lastSeenId) do
-    Server.MessageStore.get_messages_after(lastSeenId)
+    MessageStore.get_messages_after(lastSeenId)
     |> Enum.each(fn message ->
       send(self(), {:broadcast, message})
     end)
