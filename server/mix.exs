@@ -26,7 +26,7 @@ defmodule Server.MixProject do
       {:websock_adapter, "~> 0.5.9"},
       {:jason, "~> 1.4.4"},
       {:ecto_sql, "~> 3.10"},
-      {:myxql, "~> 0.6"}
+      {:postgrex, "~> 0.22.0"}
     ]
   end
 end

@@ -4,8 +4,8 @@
 test:
   mix test
 
-compile:
-  mix compile
+compile environment="dev": clean update_deps
+  MIX_ENV={{environment}} mix compile
 
 update_deps:
   mix deps.get
@@ -15,3 +15,14 @@ run_in_shell:
 
 format_code:
   mix format
+
+clean:
+  mix deps.clean --all
+
+create-database:
+  mix ecto.create
+
+create-migration table_name:
+  mix ecto.gen.migration {{table_name}}
+
+
