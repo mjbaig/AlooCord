@@ -1,7 +1,7 @@
 import Config
 
 config :server, Server.Repo,
-  database: "fireemblemcord",
+  database: "aloocord",
   username: "admin",
   password: "admin",
   hostname: "localhost"

@@ -10,6 +10,7 @@ defmodule Server.Application do
     children = [
       Server.Impl.ClientRegistry,
       Server.Impl.MessageStore,
+      Server.Repo,
       {Bandit, plug: Server.Router}
     ]
 

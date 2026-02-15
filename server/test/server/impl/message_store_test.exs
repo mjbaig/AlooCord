@@ -1,4 +1,4 @@
-defmodule Server.MessageStoreTest do
+defmodule Server.Impl.MessageStoreTest do
   alias Server.MessageStore
   use ExUnit.Case, async: false
 

@@ -19,8 +19,6 @@ defmodule Server.Dao.Accounts.User do
     )
 
     has_many(:roles, through: [:channel_memberships, :roles])
-
-    timestamps()
   end
 
   def changeset(user, attrs) do

@@ -1,4 +1,4 @@
-defmodule ClientRegistryTest do
+defmodule Server.Impl.ClientRegistryTest do
   use ExUnit.Case, async: false
 
   alias Server.Impl.ClientRegistry
