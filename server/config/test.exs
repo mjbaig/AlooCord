@@ -6,3 +6,5 @@ config :server, Server.Repo,
   database: "aloocord",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :server, :jwt_secret, "changethis"

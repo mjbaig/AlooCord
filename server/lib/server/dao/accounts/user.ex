@@ -19,10 +19,21 @@ defmodule Server.Dao.Accounts.User do
     )
 
     has_many(:roles, through: [:channel_memberships, :roles])
+
+    field(:username, :string)
+    field(:email, :string)
+    field(:password_hash, :string)
+
+    field(:email_verified, :boolean, default: false)
+    field(:email_verification_token, :string)
+
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [])
+    |> cast(attrs, [:email, :password_hash, :email_verified, :email_verification_token])
+    |> validate_required([:email, :password_hash])
+    |> unique_constraint(:email)
   end
 end

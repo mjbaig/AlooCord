@@ -13,6 +13,9 @@ update_deps:
 run_in_shell:
   iex -S mix
 
+run:
+  mix run --no-halt
+
 format_code:
   mix format
 
