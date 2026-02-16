@@ -40,9 +40,9 @@ defmodule Server.Router do
       user ->
         if Argon2.verify_pass(password, user.password_hash) do
           {:ok, token, _claims} =
-            Server.Token.generation_and_sign(%{"sub" => user.account_id})
+            Server.Token.generate_and_sign(%{"sub" => user.account_id})
 
-          send_json(conn, %{token: token})
+          json(conn, %{token: token})
         else
           send_resp(conn, 401, "invalid credentials homie")
         end

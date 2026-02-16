@@ -8,4 +8,4 @@ config :server, Server.Repo,
   show_sensitive_data_on_connection_error: false,
   pool_size: 10
 
-config :server, :jwt_secret, System.fetch_env!("JWT_SECRET")
+config :joken, default_signer: System.fetch_env!("JWT_SECRET") |> Joken.Signer.create("HS256")

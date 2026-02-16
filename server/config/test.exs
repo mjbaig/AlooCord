@@ -7,4 +7,4 @@ config :server, Server.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
-config :server, :jwt_secret, "changethis"
+config :joken, default_signer: "changethis"

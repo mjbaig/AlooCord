@@ -1,17 +1,8 @@
 defmodule Server.Token do
-  alias Joken.Signer
-  alias Joken
+  use Joken.Config
 
-  @secret Application.compile_env!(:server, :)
-  @signer Signer.create("HS256", @secret)
-
-  # generate a JWT
-  def generate_and_sign(claims) do
-    Joken.generate_and_sign(claims, @signer)
-  end
-
-  # verify a JWT
-  def verify_and_validate(token) do
-    Joken.verify_and_validate(token, @signer)
+  @impl true
+  def token_config do
+    default_claims(skip: [:aud, :iss])
   end
 end

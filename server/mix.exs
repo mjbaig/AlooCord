@@ -27,7 +27,8 @@ defmodule Server.MixProject do
       {:jason, "~> 1.4.4"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, "~> 0.22.0"},
-      {:argon2_elixir, "~> 4.1.3"}
+      {:argon2_elixir, "~> 4.1.3"},
+      {:joken, "~> 2.6"}
     ]
   end
 end
