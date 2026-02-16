@@ -9,6 +9,7 @@ defmodule Server.Repo.Migrations.InitialTableCreation do
       add :password_hash, :string, null: false
       add :email_verified, :boolean, null: false
       add :email_verification_token, :string
+      add :username, :string, size: 16, null: false
 
       timestamps(type: :utc_datetime)
     end
@@ -111,6 +112,9 @@ defmodule Server.Repo.Migrations.InitialTableCreation do
 
       add :is_admin, :boolean, default: false, null: false
       add :is_muted, :boolean, default: false, null: false
+
+      add :username, :string, size: 16
+
     end
 
     # Muted topics is used to stop braodcast of messages to these users unless the user asks for them.

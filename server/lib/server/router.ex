@@ -23,7 +23,7 @@ defmodule Server.Router do
 
   post "/signup" do
     IO.inspect(conn.body_params)
-    %{"email" => email, "password" => password} = conn.body_params
+    %{"username" => username, "email" => email, "password" => password} = conn.body_params
 
     hash = Argon2.hash_pwd_salt(password)
 
@@ -42,7 +42,7 @@ defmodule Server.Router do
           {:ok, token, _claims} =
             Server.Token.generate_and_sign(%{"sub" => user.account_id})
 
-          json(conn, %{token: token})
+          send_json(conn, %{token: token})
         else
           send_resp(conn, 401, "invalid credentials homie")
         end

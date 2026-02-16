@@ -21,13 +21,14 @@ defmodule Server.Dao.Messaging.ChannelMembership do
 
     field(:is_admin, :boolean, default: false)
     field(:is_muted, :boolean, default: false)
+    field(:username, :string)
 
     timestamps()
   end
 
   def changeset(membership, attrs) do
     membership
-    |> cast(attrs, [:account_id, :channel_id, :is_admin, :is_muted])
+    |> cast(attrs, [:account_id, :channel_id, :is_admin, :is_muted, :username])
     |> validate_required([:account_id, :channel_id])
     |> unique_constraint([:account_id, :channel_id])
   end

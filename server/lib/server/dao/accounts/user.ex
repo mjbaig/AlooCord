@@ -25,14 +25,15 @@ defmodule Server.Dao.Accounts.User do
 
     field(:email_verified, :boolean, default: false)
     field(:email_verification_token, :string)
+    field(:username, :string)
 
     timestamps(type: :utc_datetime)
   end
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password_hash, :email_verified, :email_verification_token])
-    |> validate_required([:email, :password_hash])
+    |> cast(attrs, [:email, :password_hash, :email_verified, :email_verification_token, :username])
+    |> validate_required([:email, :password_hash, :username])
     |> unique_constraint(:email)
   end
 end
