@@ -22,6 +22,8 @@ defmodule Server.Repo.Migrations.InitialTableCreation do
       add :username, :string, size: 16, null: false
     end
 
+    create unique_index(:signup_tokens, [:username])
+
     # channel tables
     # The channels here are referred to as dicord servers, but I don't like that name
     create table(:chat_channels, primary_key: false) do

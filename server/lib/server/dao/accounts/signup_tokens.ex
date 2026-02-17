@@ -12,6 +12,6 @@ defmodule Server.Dao.Accounts.SignupTokens do
     token
     |> cast(attrs, [:is_used, :username])
     |> validate_required([:is_used, :username])
-    |> unique_constraint(:username)
+    |> unique_constraint(:username, name: :signup_tokens_username_index)
   end
 end

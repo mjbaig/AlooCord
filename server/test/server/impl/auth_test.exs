@@ -58,4 +58,32 @@ defmodule Server.Impl.AuthTest do
 
     assert status == :unauthorized
   end
+
+  test "test that the same token cannot be used twice" do
+    Server.Repo.insert(%SignupTokens{username: "test_2_token", value: "token"})
+
+    {status, _} = Auth.signup("test_2_token", "password", "token")
+
+    assert status == :ok
+
+    {status, reason} = Auth.signup("test_2_token", "password", "token")
+
+    assert status == :error
+    assert reason == :token_used
+  end
+
+  test "test that a token cannot be used by the wrong username" do
+    Server.Repo.insert(%SignupTokens{username: "right_username", value: "token"})
+    {status, reason} = Auth.signup("wrong_username", "password", "token")
+    assert status == :error
+    assert reason == :unauthorized
+  end
+
+  test "test that 2 usernames cannot be the same" do
+    {:ok, _token} = Server.Repo.insert(%SignupTokens{username: "same_username", value: "token1"})
+
+    assert_raise Ecto.ConstraintError, fn ->
+      Server.Repo.insert(%SignupTokens{username: "same_username", value: "token2"})
+    end
+  end
 end

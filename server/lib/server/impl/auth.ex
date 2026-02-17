@@ -16,8 +16,6 @@ defmodule Server.Impl.Auth do
         if token.is_used do
           {:error, :token_used}
         else
-          IO.inspect(password)
-
           case insert_user(username, password) do
             {:ok, user} ->
               updated_token =
