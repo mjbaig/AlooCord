@@ -5,16 +5,22 @@ defmodule Server.Repo.Migrations.InitialTableCreation do
     #user table
     create table(:users, primary_key: false) do
       add :account_id, :binary_id, primary_key: true
-      add :email, :string, null: false
       add :password_hash, :string, null: false
-      add :email_verified, :boolean, null: false
-      add :email_verification_token, :string
+      add :verification_token, :string
       add :username, :string, size: 16, null: false
 
       timestamps(type: :utc_datetime)
     end
 
-    create unique_index(:users, [:email])
+    create unique_index(:users, [:username])
+
+
+    # signup token to only allow signups from users with tokens
+    create table(:signup_tokens, primary_key: false) do
+      add :value, :string, primary_key: true
+      add :is_used, :boolean, default: false, null: false
+      add :username, :string, size: 16, null: false
+    end
 
     # channel tables
     # The channels here are referred to as dicord servers, but I don't like that name

@@ -1,23 +1,63 @@
 defmodule Server.Impl.Auth do
   alias Server.Dao.Accounts.User
   alias Server.Repo
+  alias Server.Dao.Accounts.SignupTokens
 
-  def signup(username, email, password) do
+  def signup(username, password, signup_token) do
+    token =
+      SignupTokens
+      |> Repo.get_by(value: signup_token, username: username)
+
+    case token do
+      nil ->
+        {:error, :unauthorized}
+
+      token ->
+        if token.is_used do
+          {:error, :token_used}
+        else
+          IO.inspect(password)
+
+          case insert_user(username, password) do
+            {:ok, user} ->
+              updated_token =
+                token
+                |> Ecto.Changeset.change(is_used: true)
+                |> Repo.update()
+
+              case updated_token do
+                {:ok, _} -> {:ok, user}
+                {:error, _} -> {:error, :token_update_failed}
+              end
+
+            {:error, _} ->
+              {:error, :user_creation_failed}
+          end
+        end
+    end
+  end
+
+  defp insert_user(username, password) do
     hash = Argon2.hash_pwd_salt(password)
 
     user = %User{
       account_id: Ecto.UUID.generate(),
-      email: email,
       password_hash: hash,
       username: username,
-      email_verification_token: Ecto.UUID.generate()
+      verification_token: Ecto.UUID.generate()
     }
 
-    Server.Repo.insert!(user)
+    case Server.Repo.insert(user) do
+      {:ok, inserted_user} ->
+        {:ok, inserted_user}
+
+      {:error, _} ->
+        {:error, :user_creation_failed}
+    end
   end
 
-  def login(email, password) do
-    case Repo.get_by(Server.Dao.Accounts.User, email: email) do
+  def login(username, password) do
+    case Repo.get_by(Server.Dao.Accounts.User, username: username) do
       nil ->
         {:unauthorized}
 

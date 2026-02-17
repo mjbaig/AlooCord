@@ -25,9 +25,11 @@ defmodule Server.Router do
 
   post "/signup" do
     IO.inspect(conn.body_params)
-    %{"username" => username, "email" => email, "password" => password} = conn.body_params
 
-    Auth.signup(username, email, password)
+    %{"username" => username, "password" => password, "signup_token" => signup_token} =
+      conn.body_params
+
+    Auth.signup(username, password, signup_token)
 
     # TODO verify email
     # Add whitelist email cause I don't want randos
@@ -35,9 +37,9 @@ defmodule Server.Router do
   end
 
   post "/login" do
-    %{"email" => email, "password" => password} = conn.body_params
+    %{"username" => username, "password" => password} = conn.body_params
 
-    case Auth.login(email, password) do
+    case Auth.login(username, password) do
       {:unauthorized} ->
         send_resp(conn, 401, "invalid credentials homie")
 

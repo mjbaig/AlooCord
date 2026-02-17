@@ -28,10 +28,10 @@ create-database:
 create-migration migration_name:
   mix ecto.gen.migration {{migration_name}}
 
-run-migration-script:
+migrate:
   mix ecto.migrate
 
-rollback-migration-script:
+rollback-migration:
   mix ecto.rollback
 
 

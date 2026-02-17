@@ -11,7 +11,6 @@ defmodule Server.Dao.Accounts.UserTest do
   test "sanity test" do
     user = %User{
       account_id: "9296b08c-2e07-4c9a-a209-962ce1742242",
-      email: "dude@gmail.com",
       password_hash: "asdf",
       username: "user"
     }
